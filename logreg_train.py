@@ -1,6 +1,7 @@
 import sys
 import numpy as np
 from describe import read_data
+from sklearn.metrics import accuracy_score
 
 class LRTrainer():
 
@@ -26,7 +27,7 @@ class LRTrainer():
         return ([self._predict_one(i) for i in np.insert(X, 0, 1, axis=1)])
     
     def compute_score(self, X, y):
-        return (sum(self.predict(X) == y) / len(y) * 100)
+        return (accuracy_score(y, self.predict(X)) * 100)
 
     def _predict_one(self, grades):
         max_probability = (-10, 0)
