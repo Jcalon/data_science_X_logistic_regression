@@ -70,7 +70,8 @@ def main():
         print("\033[1;91mError, do: python3 logreg_train.py [your dataset]")
         exit(1)
     dataset = read_data(sys.argv[1])
-    target, features = get_relevant_data(dataset)
+    arr = np.random.randint(0, 100, len(dataset)) > 10
+    target, features = get_relevant_data(dataset[:][arr])
     np.apply_along_axis(normalize, 0, features)
     trainer = LRTrainer()
     weights = trainer.logistic_regression(features, target)
@@ -80,7 +81,9 @@ def main():
         print("\033[1;91mError while saving weights value.")
         exit(1)
     print("Weights saved to weights.npy")
-    print("Precision: " + "{:.2f}".format(trainer.compute_score(features, target)) + "%")
+    target0, features0 = get_relevant_data(dataset[:][~arr])
+    np.apply_along_axis(normalize, 0, features0)
+    print("Precision: " + "{:.2f}".format(trainer.compute_score(features0, target0)) + "%")
 
 if __name__ == "__main__":
     main()
