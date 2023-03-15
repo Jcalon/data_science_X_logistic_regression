@@ -30,7 +30,7 @@ def pair_plot(dataset, clean_dataset):
 
 def main():
     if len(sys.argv) != 2:
-        print("\033[1;91mError, do: python3 describe.py [your dataset]")
+        print("\033[1;91mError, do: python3 pair_plot.py [your dataset]")
         exit(1)
     dataset = read_data(sys.argv[1])
     clean_dataset = clean_data(dataset)

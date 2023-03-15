@@ -11,6 +11,9 @@ class LRTrainer():
         self.weights = []
 
     def logistic_regression(self, X, y):
+
+        """ Logistic regression algorithm """
+
         X = np.insert(X, 0, 1, axis=1)
         for house in np.unique(y):
             current_house_vs_all = np.where(y == house, 1, 0)
@@ -23,12 +26,12 @@ class LRTrainer():
             self.weights.append((w, house))
         return (self.weights)
     
-    def predict(self, X):
-        return ([self._predict_one(i) for i in np.insert(X, 0, 1, axis=1)])
-    
     def compute_score(self, X, y):
         return (accuracy_score(y, self.predict(X)) * 100)
 
+    def predict(self, X):
+        return ([self._predict_one(i) for i in np.insert(X, 0, 1, axis=1)])
+    
     def _predict_one(self, grades):
         max_probability = (-10, 0)
         for weight, house in self.weights:
@@ -71,7 +74,11 @@ def main():
     np.apply_along_axis(normalize, 0, features)
     trainer = LRTrainer()
     weights = trainer.logistic_regression(features, target)
-    np.save("weights", np.array(weights, dtype='object'))
+    try:
+        np.save("weights", np.array(weights, dtype='object'))
+    except:
+        print("\033[1;91mError while saving weights value.")
+        exit(1)
     print("Weights saved to weights.npy")
     print("Precision: " + "{:.2f}".format(trainer.compute_score(features, target)) + "%")
 
