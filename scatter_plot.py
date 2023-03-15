@@ -1,4 +1,5 @@
 import sys
+import itertools
 import matplotlib.pyplot as plt
 from describe import read_data, clean_data
 
@@ -15,17 +16,16 @@ def scatter_plot(dataset, clean_dataset):
     fig = plt.figure(figsize=(25,15))
     i = 1
     size = len(clean_dataset.columns)
-    for class_1 in clean_dataset.columns:
-        for class_2 in clean_dataset.columns:
-            ax = fig.add_subplot(size, size, i)
-            if (i <= size):
-                 ax.set_title(class_2)
-            if (i % size == 1):
-                 ax.set_ylabel(class_1[0:6])
-            ax.set_yticklabels([])
-            ax.set_xticklabels([])
-            fill_scatter_plot(ax, dataset, class_1, class_2)
-            i += 1
+    for class_1, class_2 in itertools.product(clean_dataset.columns, clean_dataset.columns):
+        ax = fig.add_subplot(size, size, i)
+        if (i <= size):
+            ax.set_title(class_2)
+        if (i % size == 1):
+             ax.set_ylabel(class_1[0:6])
+        ax.set_yticklabels([])
+        ax.set_xticklabels([])
+        fill_scatter_plot(ax, dataset, class_1, class_2)
+        i += 1
     if (len(clean_dataset.columns)):
         fig.tight_layout()
         plt.show()

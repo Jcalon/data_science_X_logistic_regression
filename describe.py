@@ -55,7 +55,7 @@ def describe_data(dataset):
         describe_dataset[column]["Max"] = tab[count - 1]
         describe_dataset[column]["Min"] = tab[0]
         describe_dataset[column]["25%"] = tab[math.ceil(count / 4) - 1]
-        describe_dataset[column]["50%"] = tab[math.ceil((count + 1) / 2) - 1]
+        describe_dataset[column]["50%"] = tab[math.ceil(count / 2) - 1]
         describe_dataset[column]["75%"] = tab[math.ceil(3 * count / 4) - 1]
     describe_dataset.rename(columns=lambda c: c[:14], inplace=True)
     return describe_dataset
